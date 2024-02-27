@@ -6,4 +6,5 @@ import java.util.List;
 public interface ProductService {
   List<Seafood> selectAllSeafood();
 
+  List<Seafood> selectOneSeafood(String name);
 }

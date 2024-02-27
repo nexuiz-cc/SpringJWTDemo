@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 public interface ProductMapper {
   List<Seafood> selectAll(Seafood seafood);
 
-  List<Seafood> selectByName(Seafood seafood);
+  List<Seafood> selectByName(String name);
 }

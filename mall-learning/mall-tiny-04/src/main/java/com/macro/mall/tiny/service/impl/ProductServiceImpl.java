@@ -15,4 +15,8 @@ public class ProductServiceImpl implements ProductService {
 @Override
   public List<Seafood>selectAllSeafood(){
   return mapper.selectAll(new Seafood());}
+
+  @Override
+  public List<Seafood>selectOneSeafood(String name){
+    return mapper.selectByName(name);}
 }

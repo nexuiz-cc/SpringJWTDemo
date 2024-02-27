@@ -13,4 +13,7 @@
   <select id="selectAll" parameterType="com.macro.mall.tiny.mbg.model.Seafood" resultMap="BaseResultMap">
     select * from seafood
   </select>
+  <select id="selectByName" parameterType="com.macro.mall.tiny.mbg.model.Seafood" resultMap="BaseResultMap">
+    select * from seafood where name = #{name}
+  </select>
 </mapper>

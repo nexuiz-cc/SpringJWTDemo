@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8858
 
 spring:
   datasource:
@@ -55,4 +55,3 @@ secure:
       - /actuator/**
       - /druid/**
       - /admin/**
-      - /product/**
