@@ -11,12 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @auther macrozheng
- * @description SpringSecurity用户信息封装类
- * @date 2020/10/15
- * @github https://github.com/macrozheng
- */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder

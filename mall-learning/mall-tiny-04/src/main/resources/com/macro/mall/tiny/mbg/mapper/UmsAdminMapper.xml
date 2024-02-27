@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.mbg.mapper.UmsAdminMapper">
+  <resultMap id="BaseResultMap" type="com.macro.mall.tiny.mbg.model.UmsAdmin">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nick_name" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="auth_json" jdbcType="VARCHAR" property="auth_json"/>
+  </resultMap>
+  <select id="queryJson" parameterType="com.macro.mall.tiny.mbg.model.Seafood" resultMap="BaseResultMap">
+    select ums_admin.auth_json from ums_admin where username = #{username}
+  </select>
+</mapper>

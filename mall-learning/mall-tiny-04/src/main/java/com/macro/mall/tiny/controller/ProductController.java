@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +28,14 @@ public class ProductController {
   @ApiOperation("获取所有Seafood菜单")
   @ResponseBody
   @RequestMapping(value = "listAll", method = RequestMethod.GET)
+  @PreAuthorize("hasAuthority('product:listAll')")
   public CommonResult<List<Seafood>> getSeafoodList(){
     return CommonResult.success(productService.selectAllSeafood());
   }
 
   @ApiOperation("获取单个Seafood菜单")
   @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+  @PreAuthorize("hasAuthority('product:list')")
   @ResponseBody
   public CommonResult<List<Seafood>> getOneSeafood(@PathVariable("name") String name){
     return CommonResult.success(productService.selectOneSeafood(name));

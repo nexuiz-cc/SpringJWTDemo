@@ -1,9 +1,14 @@
 package com.macro.mall.tiny.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.macro.mall.tiny.common.utils.JwtTokenUtil;
 import com.macro.mall.tiny.domain.AdminUserDetails;
 import com.macro.mall.tiny.domain.UmsResource;
+import com.macro.mall.tiny.mbg.mapper.UmsAdminMapper;
+import com.macro.mall.tiny.mbg.model.UmsAdmin;
 import com.macro.mall.tiny.service.UmsAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,17 +49,19 @@ public class UmsAdminServiceImpl implements UmsAdminService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+  @Autowired
+  private UmsAdminMapper adminMapper;
   @PostConstruct
   private void init() {
     adminUserDetailsList.add(AdminUserDetails.builder()
       .username("admin")
       .password(passwordEncoder.encode("123456"))
-      .authorityList(CollUtil.toList("brand:create", "brand:update", "brand:delete", "brand:list", "brand:listAll"))
+      .authorityList(CollUtil.toList("brand:create", "brand:update", "brand:delete", "brand:list", "brand:listAll","product:listAll","product:list"))
       .build());
     adminUserDetailsList.add(AdminUserDetails.builder()
       .username("macro")
       .password(passwordEncoder.encode("123456"))
-      .authorityList(CollUtil.toList("brand:listAll"))
+      .authorityList(CollUtil.toList("brand:listAll","product:listAll"))
       .build());
     resourceList.add(UmsResource.builder()
       .id(1L)
@@ -79,6 +88,7 @@ public class UmsAdminServiceImpl implements UmsAdminService {
       .name("brand:listAll")
       .url("/brand/listAll")
       .build());
+
   }
 
   @Override
@@ -94,6 +104,12 @@ public class UmsAdminServiceImpl implements UmsAdminService {
   public List<UmsResource> getResourceList() {
     return resourceList;
   }
+
+  @Override
+  public void queryJson(String name) {
+
+  }
+
 
   @Override
   public String login(String username, String password) {
