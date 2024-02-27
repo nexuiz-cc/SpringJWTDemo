@@ -50,6 +50,7 @@ public class SecurityConfig {
         for (String url : ignoreUrlsConfig.getUrls()) {
             registry.antMatchers(url).permitAll();
         }
+
         //允许跨域请求的OPTIONS请求
         registry.antMatchers(HttpMethod.OPTIONS)
                 .permitAll();
@@ -60,6 +61,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .anyRequest()// 除上面外的所有请求全部需要鉴权认证
+
                 .authenticated();
         // 禁用缓存
         httpSecurity.headers().cacheControl();
