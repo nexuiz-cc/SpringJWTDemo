@@ -7,4 +7,6 @@ public interface ProductMapper {
   List<Seafood> selectAll(Seafood seafood);
 
   List<Seafood> selectByName(String name);
+
+  int updateOneSeafood(Seafood seafood);
 }

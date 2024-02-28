@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class Seafood implements Serializable {
   @ApiModelProperty(value = "id")
-  private Long id;
+  private String id;
   @ApiModelProperty(value = "商品名称")
   private String name;
   @ApiModelProperty(value = "数量")
@@ -16,11 +16,11 @@ public class Seafood implements Serializable {
   @ApiModelProperty(value = "单价")
   private Integer unitPrice;
 
-  public Long getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(String id) {
     this.id = id;
   }
 

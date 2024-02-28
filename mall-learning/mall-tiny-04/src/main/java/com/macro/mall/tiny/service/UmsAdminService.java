@@ -22,7 +22,6 @@ public interface UmsAdminService {
      */
     List<UmsResource> getResourceList();
 
-    void queryJson(String name);
 
     /**
      * 用户名密码登录

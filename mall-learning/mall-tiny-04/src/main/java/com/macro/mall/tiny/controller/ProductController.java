@@ -9,10 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,19 +23,30 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
-  @ApiOperation("获取所有Seafood菜单")
+
+  @ApiOperation("获取Seafood菜单")
   @ResponseBody
-  @RequestMapping(value = "listAll", method = RequestMethod.GET)
-  @PreAuthorize("hasAuthority('product:listAll')")
-  public CommonResult<List<Seafood>> getSeafoodList(){
+  @RequestMapping(value = "get/listAll", method = RequestMethod.GET)
+  @PreAuthorize("hasAuthority('product')")
+  public CommonResult<List<Seafood>> getSeafoodList() {
     return CommonResult.success(productService.selectAllSeafood());
   }
 
-  @ApiOperation("获取单个Seafood菜单")
-  @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-  @PreAuthorize("hasAuthority('product:list')")
+  @ApiOperation("获取单个Seafood")
+  @RequestMapping(value = "get/{name}", method = RequestMethod.GET)
+  @PreAuthorize("hasAuthority('product')")
   @ResponseBody
-  public CommonResult<List<Seafood>> getOneSeafood(@PathVariable("name") String name){
+  public CommonResult<List<Seafood>> getOneSeafood(@PathVariable("name") String name) {
     return CommonResult.success(productService.selectOneSeafood(name));
+  }
+
+  @ApiOperation("更新单个Seafood")
+  @RequestMapping(value = {"/update/{id}"}, method = RequestMethod.POST)
+  @PreAuthorize("hasAuthority('product')")
+  @ResponseBody
+  public void UpdateOneSeafood(
+    @PathVariable("id") String id,
+    @Validated @RequestBody Seafood seafood) {
+    productService.updateOneSeafood(id, seafood);
   }
 }

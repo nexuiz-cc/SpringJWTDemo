@@ -56,12 +56,12 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     adminUserDetailsList.add(AdminUserDetails.builder()
       .username("admin")
       .password(passwordEncoder.encode("123456"))
-      .authorityList(CollUtil.toList("brand:create", "brand:update", "brand:delete", "brand:list", "brand:listAll","product:listAll","product:list"))
+      .authorityList(CollUtil.toList("brand:create", "brand:update", "brand:delete", "brand:list", "brand:listAll","product"))
       .build());
     adminUserDetailsList.add(AdminUserDetails.builder()
       .username("macro")
       .password(passwordEncoder.encode("123456"))
-      .authorityList(CollUtil.toList("brand:listAll","product:listAll"))
+      .authorityList(CollUtil.toList("brand:listAll","product"))
       .build());
     resourceList.add(UmsResource.builder()
       .id(1L)
@@ -103,11 +103,6 @@ public class UmsAdminServiceImpl implements UmsAdminService {
   @Override
   public List<UmsResource> getResourceList() {
     return resourceList;
-  }
-
-  @Override
-  public void queryJson(String name) {
-
   }
 
 
