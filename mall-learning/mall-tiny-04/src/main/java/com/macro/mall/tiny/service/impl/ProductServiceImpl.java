@@ -22,12 +22,13 @@ public class ProductServiceImpl implements ProductService {
   public List<Seafood> selectOneSeafood(String name) {
     return mapper.selectByName(name);
   }
-  @Override
-  public int updateOneSeafood(String id,Seafood seafood) {
-    Seafood newSeafood= new Seafood();
-    int newCount = seafood.getCount() + 1;
-    newSeafood.setId(id);
-    newSeafood.setCount(newCount);
-    return  mapper.updateOneSeafood(newSeafood);
+
+
+  public int getCountById(int id) {
+    return mapper.getCountById(id);
+  }
+
+  public void updateCount(int id) {
+    mapper.updateCount(id);
   }
 }

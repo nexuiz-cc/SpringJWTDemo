@@ -23,4 +23,7 @@
     </set>
     where id = #{id}
   </update>
+  <select id="selectById" parameterType="com.macro.mall.tiny.mbg.model.Seafood" resultMap="BaseResultMap">
+    select * from seafood where id = #{id}
+  </select>
 </mapper>

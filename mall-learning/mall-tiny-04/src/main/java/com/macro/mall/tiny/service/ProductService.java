@@ -10,6 +10,8 @@ public interface ProductService {
 
   List<Seafood> selectOneSeafood(String name);
 
-  @Transactional
-  int updateOneSeafood(String id, Seafood seafood);
+
+  int getCountById(int id);
+
+  void updateCount(int id);
 }
