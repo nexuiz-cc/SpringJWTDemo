@@ -14,6 +14,10 @@ public interface ProductMapper {
   @Select("SELECT count FROM seafood WHERE id = #{id}")
   int getCountById(int id);
 
-  @Update("UPDATE seafood SET count = count + 1 WHERE id = #{id}")
-  void updateCount(int id);
+  @Update("UPDATE seafood SET count = count + 1,price = count* unitPrice WHERE id = #{id}")
+  void increase(int id);
+  @Update("UPDATE seafood SET count = count - 1,price = count* unitPrice WHERE id = #{id}")
+  void decrease(int id);
+  @Select("SELECT price FROM seafood WHERE id = #{id}")
+  int getPriceById(int id);
 }

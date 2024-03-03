@@ -46,7 +46,7 @@ public class ProductController {
   }
 
   @ApiOperation("用id获取Seafood数量")
-  @GetMapping("/{id}/count")
+  @GetMapping("get/count/{id}")
   public ResponseEntity<Object> getCountById(@PathVariable int id) {
     int count = service.getCountById(id);
     if (count == -1) {
@@ -56,15 +56,29 @@ public class ProductController {
     return ResponseEntity.ok(count);
   }
 
-  @ApiOperation("更新Seafood")
-  @RequestMapping(value = "/{id}/increment", method = RequestMethod.POST)
+  @ApiOperation("Seafood数量+1")
+  @RequestMapping(value = "update/increase/{id}/", method = RequestMethod.POST)
   @PreAuthorize("hasAuthority('product')")
-  public ResponseEntity<Object> incrementCount(@PathVariable int id) {
+  public ResponseEntity<Object> increase(@PathVariable int id) {
     int count = service.getCountById(id);
+    int price = service.getPriceById(id);
     if (count == -1) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seafood with ID " + id + " not found.");
     }
-    service.updateCount(id);
-    return ResponseEntity.ok("Count incremented successfully for seafood with ID " + id);
+    service.increase(id);
+    return ResponseEntity.ok("Count has increased successfully to " + count + ", price has changed to " + price +" for seafood with ID 「" + id + "」.");
+  }
+  @ApiOperation("Seafood数量-1")
+  @RequestMapping(value = "update/decrease/{id}/", method = RequestMethod.POST)
+  @PreAuthorize("hasAuthority('product')")
+  public ResponseEntity<Object> decrease(@PathVariable int id) {
+    int count = service.getCountById(id);
+    int price = service.getPriceById(id);
+    if (count == -1) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body("Seafood with ID " + id + " not found.");
+    }
+    service.decrease(id);
+    return ResponseEntity.ok("Count has decreased successfully to " + count + ", price has changed to " + price +" for seafood with ID 「" + id + "」.");
   }
 }

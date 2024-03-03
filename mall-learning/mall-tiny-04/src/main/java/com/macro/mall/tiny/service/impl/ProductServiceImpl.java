@@ -28,7 +28,14 @@ public class ProductServiceImpl implements ProductService {
     return mapper.getCountById(id);
   }
 
-  public void updateCount(int id) {
-    mapper.updateCount(id);
+  public void increase(int id) {
+    mapper.increase(id);
+  }
+
+  public void decrease(int id) {
+    mapper.decrease(id);
+  }
+  public int getPriceById(int id) {
+    return mapper.getPriceById(id);
   }
 }

@@ -1,7 +1,6 @@
 package com.macro.mall.tiny.service;
 
 import com.macro.mall.tiny.mbg.model.Seafood;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,5 +12,7 @@ public interface ProductService {
 
   int getCountById(int id);
 
-  void updateCount(int id);
+  void increase(int id);
+  void decrease(int id);
+  int getPriceById(int id);
 }
