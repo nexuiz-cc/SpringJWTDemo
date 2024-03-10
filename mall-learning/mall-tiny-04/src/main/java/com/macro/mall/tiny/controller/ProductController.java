@@ -18,7 +18,7 @@ import java.util.List;
 
 @RequestMapping("/product")
 @Api(tags = "ProductController")
-@Tag(name = "ProductController", description = "商品管理")
+@Tag(name = "ProductController", description = "商品の管理")
 @Controller
 public class ProductController {
   private final ProductService service;
@@ -29,7 +29,7 @@ public class ProductController {
   }
 
 
-  @ApiOperation("获取Seafood菜单")
+  @ApiOperation("シーフードのメニューを取得")
   @ResponseBody
   @RequestMapping(value = "get/listAll", method = RequestMethod.GET)
   @PreAuthorize("hasAuthority('product')")
@@ -37,7 +37,7 @@ public class ProductController {
     return CommonResult.success(service.selectAllSeafood());
   }
 
-  @ApiOperation("获取单个Seafood")
+  @ApiOperation("メニュー項目を検索")
   @RequestMapping(value = "get/{name}", method = RequestMethod.GET)
   @PreAuthorize("hasAuthority('product')")
   @ResponseBody
@@ -45,18 +45,17 @@ public class ProductController {
     return CommonResult.success(service.selectOneSeafood(name));
   }
 
-  @ApiOperation("用id获取Seafood数量")
+  @ApiOperation("指定idのメニュー項目数量を取得")
   @GetMapping("get/count/{id}")
   public ResponseEntity<Object> getCountById(@PathVariable int id) {
     int count = service.getCountById(id);
     if (count == -1) {
-      // Handle the case where the resource is not found
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seafood with ID " + id + " not found.");
     }
     return ResponseEntity.ok(count);
   }
 
-  @ApiOperation("Seafood数量+1")
+  @ApiOperation("指定idのメニュー項目数量+1")
   @RequestMapping(value = "update/increase/{id}/", method = RequestMethod.POST)
   @PreAuthorize("hasAuthority('product')")
   public ResponseEntity<Object> increase(@PathVariable int id) {
@@ -66,9 +65,13 @@ public class ProductController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Seafood with ID " + id + " not found.");
     }
     service.increase(id);
-    return ResponseEntity.ok("Count has increased successfully to " + count + ", price has changed to " + price +" for seafood with ID 「" + id + "」.");
+    String countMsg = "Count has increase successfully to 「" + count + "」,";
+    String priceMsg = "price has changed to「" + price + "」";
+    String idMsg = "seafood with ID 「" + id + "」.";
+    return ResponseEntity.ok(countMsg + priceMsg + idMsg);
   }
-  @ApiOperation("Seafood数量-1")
+
+  @ApiOperation("指定idのメニュー項目数量-1")
   @RequestMapping(value = "update/decrease/{id}/", method = RequestMethod.POST)
   @PreAuthorize("hasAuthority('product')")
   public ResponseEntity<Object> decrease(@PathVariable int id) {
@@ -79,6 +82,17 @@ public class ProductController {
         .body("Seafood with ID " + id + " not found.");
     }
     service.decrease(id);
-    return ResponseEntity.ok("Count has decreased successfully to " + count + ", price has changed to " + price +" for seafood with ID 「" + id + "」.");
+    String countMsg = "Count has decreased successfully to 「" + count + "」,";
+    String priceMsg = "price has changed to「" + price + "」";
+    String idMsg = "seafood with ID 「" + id + "」.";
+    return ResponseEntity.ok(countMsg + priceMsg + idMsg);
+  }
+
+  @ApiOperation("指定idのシーフードを削除")
+  @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+  @PreAuthorize("hasAuthority('product')")
+  public ResponseEntity<Object> deleteSeafood(@PathVariable int id) {
+    service.deleteSeafoodById(id);
+    return ResponseEntity.ok("Seafood with ID " + id + " has been deleted.");
   }
 }

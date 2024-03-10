@@ -26,7 +26,7 @@ import java.util.Map;
  */
 @Controller
 @Api(tags = "UmsAdminController")
-@Tag(name = "UmsAdminController", description = "后台用户管理")
+@Tag(name = "UmsAdminController", description = "ユーザー管理")
 @RequestMapping("/admin")
 public class UmsAdminController {
     @Autowired
@@ -37,7 +37,7 @@ public class UmsAdminController {
     private String tokenHead;
 
 
-    @ApiOperation(value = "登录以后返回token")
+    @ApiOperation(value = "ログインして、tokenを取得")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@RequestParam String username, @RequestParam String password) {

@@ -38,4 +38,12 @@ public class ProductServiceImpl implements ProductService {
   public int getPriceById(int id) {
     return mapper.getPriceById(id);
   }
+
+  /**
+   * @description 指定idのシーフードを削除
+   * @param id
+   */
+  public void deleteSeafoodById(int id) {
+    mapper.deleteSeafoodById(id);
+  }
 }

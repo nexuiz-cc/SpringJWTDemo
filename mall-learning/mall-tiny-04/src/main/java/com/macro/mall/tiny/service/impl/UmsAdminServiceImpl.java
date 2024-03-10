@@ -1,14 +1,10 @@
 package com.macro.mall.tiny.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.macro.mall.tiny.common.utils.JwtTokenUtil;
 import com.macro.mall.tiny.domain.AdminUserDetails;
 import com.macro.mall.tiny.domain.UmsResource;
 import com.macro.mall.tiny.mbg.mapper.UmsAdminMapper;
-import com.macro.mall.tiny.mbg.model.UmsAdmin;
 import com.macro.mall.tiny.service.UmsAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

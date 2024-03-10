@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -25,9 +26,8 @@ import java.util.List;
  * @date 2019/4/19
  * @github https://github.com/macrozheng
  */
-@Controller
-@Api(tags = "PmsBrandController")
-@Tag(name = "PmsBrandController", description = "商品品牌管理")
+@RestController
+@ApiIgnore
 @RequestMapping("/brand")
 public class PmsBrandController {
   @Autowired
