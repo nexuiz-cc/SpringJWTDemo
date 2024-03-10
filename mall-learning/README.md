@@ -23,13 +23,47 @@ https://github.com/nexuiz-cc/SpringJWTDemo/tree/main/mall-learning/mall-tiny-04
 
 １、ユーザー管理
 
-　　ユーザー登録・ユーザーログイン
+　　・ユーザー登録
+
+　　・ユーザーログイン
 
 ２．商品管理
 
-　・商品検索
+　　・商品検索
 
-　・全ての商品を取得
+　　・全ての商品を取得
 
-　・指定された商品数の更新
+　　・指定された商品数の更新
 
+　　・指定された商品の削除
+
+
+
+## ポイントや難しかったところ：
+
+１．ユーザーログイン機能を開発の際：管理員ユーザーに各権限を与えます。
+
+```Java
+  private void init() {
+    adminUserDetailsList.add(AdminUserDetails.builder()
+      .username("admin")
+      .password(passwordEncoder.encode("123456"))
+      .authorityList(CollUtil.toList("brand:create", "brand:update", "brand:delete", "brand:list", "brand:listAll","product"))
+      .build());
+      ...
+}     
+```
+
+２．全ての商品を取得APIはproductの権限がないとアクセス出来ない
+
+```Java
+ @ApiOperation("メニュー項目を検索")
+  @RequestMapping(value = "get/{name}", method = RequestMethod.GET)
+  @PreAuthorize("hasAuthority('product')")
+  @ResponseBody
+  public CommonResult<List<Seafood>> getOneSeafood(@PathVariable("name") String name) {
+    return CommonResult.success(service.selectOneSeafood(name));
+  }
+```
+
+3.
