@@ -33,54 +33,53 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-    @Autowired
-    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
-    @Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    @Autowired
-    private IgnoreUrlsConfig ignoreUrlsConfig;
+  @Autowired
+  private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+  @Autowired
+  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+  @Autowired
+  private IgnoreUrlsConfig ignoreUrlsConfig;
 
-    @Bean
-    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
-                .authorizeRequests();
-        //不需要保护的资源路径允许访问
-        for (String url : ignoreUrlsConfig.getUrls()) {
-            registry.antMatchers(url).permitAll();
-        }
-
-        //允许跨域请求的OPTIONS请求
-        registry.antMatchers(HttpMethod.OPTIONS)
-                .permitAll();
-        httpSecurity.csrf()// 由于使用的是JWT，我们这里不需要csrf
-                .disable()
-                .sessionManagement()// 基于token，所以不需要session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest()// 除上面外的所有请求全部需要鉴权认证
-                .authenticated();
-        // 禁用缓存
-        httpSecurity.headers().cacheControl();
-        // 添加JWT filter
-        httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        //添加自定义未授权和未登录结果返回
-        httpSecurity.exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler)
-                .authenticationEntryPoint(restAuthenticationEntryPoint);
-        return httpSecurity.build();
+  @Bean
+  SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
+      .authorizeRequests();
+    //不需要保护的资源路径允许访问
+    for (String url : ignoreUrlsConfig.getUrls()) {
+      registry.antMatchers(url).permitAll();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    //クロスドメインリクエストのOPTIONSリクエストを 許可する
+    registry.antMatchers(HttpMethod.OPTIONS)
+      .permitAll();
+    httpSecurity.csrf()
+      .disable()
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .authorizeRequests()
+      .anyRequest()
+      .authenticated();
+    httpSecurity.headers().cacheControl();
+    // JWT Filterの追加
+    httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    //　権限を未承認、ユーザーが未ログインのメッセージ
+    httpSecurity.exceptionHandling()
+      .accessDeniedHandler(restfulAccessDeniedHandler)
+      .authenticationEntryPoint(restAuthenticationEntryPoint);
+    return httpSecurity.build();
+  }
 
-    @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
-        return new JwtAuthenticationTokenFilter();
-    }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
+    return new JwtAuthenticationTokenFilter();
+  }
 
 }
